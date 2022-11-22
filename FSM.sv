@@ -39,43 +39,10 @@ module top(input  logic clk_2,
     lcd_b <= {SWI, 56'hFEDCBA09876543};
   end
   
-  parameter NBITS_COUNT = 4;
-  logic [NBITS_COUNT-1:0] Data_in, Count;
-  logic reset, load, select_count, in_bit, out_bit;;
+  logic reset, in_bit, out_bit;
 
   always_comb reset <= SWI[0];
-  always_comb select_count <= SWI[1];
-  always_comb load <= SWI[2];
-  always_comb in_bit <= SWI[3];
-  always_comb Data_in <= SWI[7:4];
-
-  always_ff @(posedge reset or posedge clk_2) begin
-    if(reset) 
-      Count <= 0;
-    else if (load) 
-      Count <= Data_in;
-    else begin
-      if(select_count) Count <= Count - 1;
-      else Count <= Count +1;
-    end
-  end
-
-  always_comb LED[7] <= clk_2;
-  always_comb LED[5:2] <= Count;
-  //Seg
-  always_comb SEG[0] <= (Count[3] | Count[2] | Count[1] | ~Count[0]) & (Count[3] | ~Count[2] | Count[1] | Count[0]) & (~Count[3] | Count[2] | ~Count[1] | ~Count[0]) & (~Count[3] | ~Count[2] | Count[1] | ~Count[0]);
-  
-  always_comb SEG[1] <= (Count[3] | ~Count[2] | Count[1] | ~Count[0]) & (~Count[2] | ~Count[1] | Count[0]) & (~Count[3] | ~Count[1] | ~Count[0]) & (~Count[3] | ~Count[2] | Count[0]);
-  
-  always_comb SEG[2] <= (Count[3] | Count[2] | ~Count[1] | Count[0]) & (~Count[3] | ~Count[2] | Count[0]) & (~Count[3] | ~Count[2] | ~Count[1]);
-  
-  always_comb SEG[3] <= (Count[3] | Count[2] | Count[1] | ~Count[0]) & (Count[3] | ~Count[2] | Count[1] | Count[0]) & (~Count[2] | ~Count[1] | ~Count[0]) & (~Count[3] | Count[2] | ~Count[1] | Count[0]);
-  
-  always_comb SEG[4] <= (Count[3] | ~Count[0]) & (Count[3] | ~Count[2] | Count[1]) & (Count[2] | Count[1] | ~Count[0]);
-  
-  always_comb SEG[5] <= (Count[3] | Count[2] | ~Count[0]) & (Count[3] | Count[2] | ~Count[1]) & (Count[3] | ~Count[1] | ~Count[0]) & (~Count[3] | ~Count[2] | Count[1] | ~Count[0]);
-
-  always_comb SEG[6] <= (Count[3] | Count[2] | Count[1]) & (Count[3] | ~Count[2] | ~Count[1] | ~Count[0]) & (~Count[3] | ~Count[2] | Count[1] | Count[0]);
+  always_comb in_bit <= SWI[4];
 
   enum logic [3 : 0] {A, B, C, D } state;
 
@@ -107,6 +74,7 @@ module top(input  logic clk_2,
   
   always_comb out_bit <= (state == D);
 
-  always_comb LED[0] <= out_bit;
+  always_comb LED[0] <= clk_2;
+  always_comb LED[7] <= out_bit;
   
 endmodule
