@@ -1,0 +1,13 @@
+; instrução 1
+; campos da instrução tipo I
+;     imm        rs1  funct3  rd    opcode
+0000 0000 0010  00000  000   01010 001 0011 ; addi, zero, 0x02
+
+; instrução 2
+; campos da instrução tipo I
+;     imm        rs1  funct3  rd    opcode
+0000 0000 0100  00000   000  01011 001 0011 ; addi, zero, 0x04
+
+; instrução 3
+; imm[12/10:5]   rs2    rs1  funct3 imm[4:1/11]    opcode
+0000 000        01011  01010   000    01100       110 0011 ; beq, 
