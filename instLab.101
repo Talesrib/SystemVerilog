@@ -1,13 +1,51 @@
 ; instrução 1
 ; campos da instrução tipo I
 ;     imm        rs1  funct3  rd    opcode
-0000 0000 0010  00000  000   01010 001 0011 ; addi, zero, 0x02
+0000 0000 0010  00000  000   01010  0010011 ; addi x10, zero, 0x02
 
 ; instrução 2
 ; campos da instrução tipo I
 ;     imm        rs1  funct3  rd    opcode
-0000 0000 0100  00000   000  01011 001 0011 ; addi, zero, 0x04
+0000 0000 0100  00000   000  01011  0010011 ; addi x11, zero, 0x04
 
 ; instrução 3
-; imm[12/10:5]   rs2    rs1  funct3 imm[4:1/11]    opcode
-0000 000        01011  01010   000    01100       110 0011 ; beq, 
+; imm[12|10:5]   rs2    rs1  funct3 imm[4:1|11]    opcode
+0 000000       01011  01010   000    0110 0       1100011 ; beq x10, x11, 12 
+; imm = 0000000001100 = 12
+
+; instrução 4
+; campos da instrução tipo R
+; funct7   rs2    rs1  funct3   rd   opcode
+0000000 01010 01010 000   01100 0110011 ; add x12, x10, x10  
+
+; instrução 5
+; campos da instrução tipo UJ
+; imm[20|10:1|11|19:12]   rd   opcode
+0 0000000100 0 00000000 00000 1101111 ; jal x0 8
+; imm = 00000000000000000100 = 8
+
+; instrução 6
+; campos da instrução tipo R
+; funct7   rs2    rs1  funct3   rd   opcode
+0000000 01011 01011 000 01100 0110011 ; add x12, x11, x11
+
+; instrução 7
+; campos da instrução tipo I
+;     imm        rs1  funct3  rd    opcode
+0000 0000 0000 00000 000 00000 0010011 ; addi x0, zero, 0x00
+
+00200513
+00400593
+00b50663
+00a50633
+0080006f
+00b58633
+00000013
+
+0x00200513
+0x00400593
+0x00b50663
+0x00a50633
+0x0080006f
+0x00b58633
+0x00000013
