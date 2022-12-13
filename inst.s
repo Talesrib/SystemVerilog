@@ -1,7 +1,7 @@
-.section .text
-.globl main
-main:
+.text
+addi  a0, x0, 4               # 4 = Print string
+la    a1, teste               # a1 - endereco que aponta para string
+ecall                         # Call para saida - string
 
-    addi a1,zero,0x11
-    addi a2,zero,0x22
-    add a3,a2,a1
+.data                         # memoria de dados (0x10000000)
+teste:  .asciiz "HELLO WORLD\n"   # string
