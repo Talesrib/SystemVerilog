@@ -1,12 +1,8 @@
-.section .text
+.text
 .globl main
 main:
-	addi x10, zero, 2
-  addi x11, zero, 4
-  beq x10, x11, outro
-  add x12, x10, x10
-  j fim
-outro:
-	add x12, x11, x11
-fim:
-  nop
+	addi x4, zero, 0xFE
+    li x5, 0x000
+    lui x5, 0x10000
+    sw x4, 0xc(x5)
+    lw x10, 0xc(x5)
